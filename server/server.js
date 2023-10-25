@@ -3,11 +3,14 @@ import path from 'path'
 import cors from 'cors'
 import sockjs from 'sockjs'
 import cookieParser from 'cookie-parser'
+import mongooseService from './services/mongoose'
 
 import config from './config'
 import Html from '../client/html'
 
 require('colors')
+
+mongooseService.connect()
 
 let connections = []
 
