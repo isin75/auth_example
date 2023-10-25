@@ -3,7 +3,11 @@ import path from 'path'
 import cors from 'cors'
 import sockjs from 'sockjs'
 import cookieParser from 'cookie-parser'
+import passport from 'passport'
+
+
 import mongooseService from './services/mongoose'
+import passportJWT from './services/passport'
 import User from './model/User.model'
 
 import config from './config'
@@ -27,6 +31,8 @@ const server = express()
 
 const middleware = [
   cors(),
+  passport.initialize(),
+  passport.use('jwt', passportJWT),
   express.static(path.resolve(__dirname, '../dist')),
   express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }),
   express.json({ limit: '50mb', extended: true }),
