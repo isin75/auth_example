@@ -4,6 +4,7 @@ import cors from 'cors'
 import sockjs from 'sockjs'
 import cookieParser from 'cookie-parser'
 import mongooseService from './services/mongoose'
+import User from './model/User.model'
 
 import config from './config'
 import Html from '../client/html'
@@ -11,6 +12,13 @@ import Html from '../client/html'
 require('colors')
 
 mongooseService.connect()
+
+const user = new User({
+  email: 'test@gmail.com',
+  password: 123
+})
+
+user.save()
 
 let connections = []
 
