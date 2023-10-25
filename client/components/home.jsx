@@ -1,18 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Head from './head'
-// import wave from '../assets/images/wave.jpg'
+import LoginForm from './login'
+
 
 const Home = () => {
-  const [counter, setCounterNew] = useState(0)
-
   return (
     <div>
       <Head title="Dashboard" />
-      <img alt="wave" src="images/wave.jpg" />
-      <button type="button" onClick={() => setCounterNew(counter + 1)}>
-        updateCounter
-      </button>
-      <div> Hello World Dashboard {counter} </div>
+      <LoginForm />
     </div>
   )
 }

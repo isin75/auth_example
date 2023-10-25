@@ -24,6 +24,17 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
+server.get('/api/v1/test/cookie', (req, res) => {
+  console.log(req.cookies)
+  res.cookie('serverCookie', 'test', { maxAge: 90000, httpOnly: true })
+  res.json({ status: req.cookies })
+})
+
+server.post('/api/v1/auth', async (req, res) => {
+  console.log(req.body)
+  res.json({ status: 'ok' })
+})
+
 server.get('/', (req, res) => {
   res.send(`
     <h2>This is SkillCrucial Express Server!</h2>
