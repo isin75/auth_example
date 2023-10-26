@@ -1,13 +1,15 @@
+import Cookies from 'universal-cookie'
 import { history } from '..'
 
 const UPDATE_EMAIL = 'auth_example/auth/UPDATE_EMAIL'
 const UPDATE_PASSWORD = 'auth_example/auth/UPDATE_PASSWORD'
 const LOGIN = 'auth_example/auth/LOGIN'
 
+const cookies = new Cookies()
 const initialState = {
   email: '',
   password: '',
-  token: '',
+  token: cookies.get('token'),
   user: {}
 }
 
@@ -47,6 +49,18 @@ export function updateLoginField(email) {
 export function updatePasswordField(password) {
   return { type: UPDATE_PASSWORD, payload: password }
 }
+
+export function trySigIn() {
+  return (dispatch) => {
+    fetch('/api/v1/auth')
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch({ type: LOGIN, payload: data.token, user: data.user })
+        history.push('/private')
+      })
+  }
+}
+
 
 export function signIn() {
   return (dispatch, getState) => {
