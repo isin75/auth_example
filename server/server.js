@@ -54,7 +54,8 @@ server.post('/api/v1/auth', async (req, res) => {
     const user = await User.findAndValidateUser(req.body)
     const payload = { uid: user.id }
     const token = jwt.sign(payload, config.secret, {expiresIn: '48h'})
-    res.json({ status: 'ok', token })
+    delete user.password
+    res.json({ status: 'ok', token, user })
   } catch (err) {
     console.log(err)
     res.json({ status: 'error', err })

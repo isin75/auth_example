@@ -1,4 +1,4 @@
-
+import { history } from '..'
 
 const UPDATE_EMAIL = 'auth_example/auth/UPDATE_EMAIL'
 const UPDATE_PASSWORD = 'auth_example/auth/UPDATE_PASSWORD'
@@ -7,7 +7,8 @@ const LOGIN = 'auth_example/auth/LOGIN'
 const initialState = {
   email: '',
   password: '',
-  token: ''
+  token: '',
+  user: {}
 }
 
 /* eslint-disable default-param-last */
@@ -29,6 +30,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+        user: action.user,
         email: '',
         password: ''
       }
@@ -61,7 +63,8 @@ export function signIn() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        dispatch({ type: LOGIN, payload: data.token })
+        dispatch({ type: LOGIN, payload: data.token, user: data.user })
+      history.push('/private')
       })
   }
 }

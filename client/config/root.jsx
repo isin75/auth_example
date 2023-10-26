@@ -8,6 +8,7 @@ import store, { history } from '../redux'
 import Home from '../components/home'
 import DummyView from '../components/dummy-view'
 import NotFound from '../components/404'
+import PrivateRout from '../components/private-route'
 
 import Startup from './startup'
 
@@ -22,11 +23,10 @@ const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = useSelector((state) => state.auth.user)
-  const token = useSelector((state) => state.token)
+  const auth = useSelector((state) => state.auth)
 
   const func = (props) => {
-    if (!!user && !!user.name && !!token) return <Component {...props} />
+    if (!!auth.user && !!auth.token) return <Component {...props} />
 
     return (
       <Redirect
@@ -49,8 +49,9 @@ const RootComponent = (props) => {
         <Startup>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Home} />
             <Route exact path="/dashboard" component={DummyView} />
-            <PrivateRoute exact path="/hidden-route" component={DummyView} />
+            <PrivateRoute exact path="/private" component={PrivateRout} />
             <OnlyAnonymousRoute exact path="/anonymous-route" component={DummyView} />
 
             <Route component={NotFound} />
