@@ -1,10 +1,11 @@
-const UPDATE_LOGIN = 'auth_example/auth/UPDATE_LOGIN'
+
+
+const UPDATE_EMAIL = 'auth_example/auth/UPDATE_EMAIL'
 const UPDATE_PASSWORD = 'auth_example/auth/UPDATE_PASSWORD'
 const LOGIN = 'auth_example/auth/LOGIN'
 
-
 const initialState = {
-  login: '',
+  email: '',
   password: '',
   token: ''
 }
@@ -12,10 +13,10 @@ const initialState = {
 /* eslint-disable default-param-last */
 export default (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_LOGIN: {
+    case UPDATE_EMAIL: {
       return {
         ...state,
-        login: action.payload
+        email: action.payload
       }
     }
     case UPDATE_PASSWORD: {
@@ -27,7 +28,9 @@ export default (state = initialState, action) => {
     case LOGIN: {
       return {
         ...state,
-        token: action.payload
+        token: action.payload,
+        email: '',
+        password: ''
       }
     }
     default:
@@ -35,9 +38,8 @@ export default (state = initialState, action) => {
   }
 }
 
-
-export function updateLoginField(login) {
-  return { type: UPDATE_LOGIN, payload: login }
+export function updateLoginField(email) {
+  return { type: UPDATE_EMAIL, payload: email }
 }
 
 export function updatePasswordField(password) {
@@ -46,20 +48,20 @@ export function updatePasswordField(password) {
 
 export function signIn() {
   return (dispatch, getState) => {
-    const { login, password } = getState().auth
+    const { email, password } = getState().auth
     fetch('/api/v1/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        login,
+        email,
         password
       })
     })
-      .then(resp => resp.json())
-      .then(data => {
-        dispatch({ type: LOGIN, payload: data.token})
+      .then((resp) => resp.json())
+      .then((data) => {
+        dispatch({ type: LOGIN, payload: data.token })
       })
   }
 }

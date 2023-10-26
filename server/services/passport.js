@@ -1,5 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 import passportJWT from 'passport-jwt'
+import config from '../config'
 
 import User from '../model/User.model'
 
@@ -8,7 +9,7 @@ const cookieExctractor = (req) => {
 }
 
 const jwtOptions = {
-  secretOrKey: 'secret',
+  secretOrKey: config.secret,
   jwtFromRequest: passportJWT.ExtractJwt.fromExtractors([cookieExctractor])
 }
 
