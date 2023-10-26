@@ -61,6 +61,15 @@ export function trySigIn() {
   }
 }
 
+export function tryGetUserInfo() {
+  return () => {
+    fetch('/api/v1/user-info')
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data)
+      })
+  }
+}
 
 export function signIn() {
   return (dispatch, getState) => {
