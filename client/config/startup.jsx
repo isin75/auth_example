@@ -6,11 +6,12 @@ import { trySigIn, tryGetUserInfo } from '../redux/reducers/auth'
 const Startup = (props) => {
   const dispatch = useDispatch()
   const { token } = useSelector((s) => s.auth)
-  useEffect(() => {}, [])
-  if (token) {
-  dispatch(trySigIn())
-  dispatch(tryGetUserInfo())
-  }
+  useEffect(() => {
+    if (token) {
+      dispatch(trySigIn())
+      dispatch(tryGetUserInfo())
+    }
+  }, [])
   return props.children
 }
 
